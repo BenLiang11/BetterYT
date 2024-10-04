@@ -1,6 +1,4 @@
-# ImprovedYT_v1.0.0_copy
-
-This is a copy of the initial, non-production version of the ImprovedYT chrome extention. Developments are ongoing for production and later versions.
+# ImprovedYT
 
 ## How to use (for development/viewing)
 
