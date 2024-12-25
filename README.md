@@ -1,6 +1,6 @@
 # ImprovedYT
 
-## How to use (for development/viewing)
+## How to use
 
 1. Download source code from GitHub
 2. Upload the files as an unpacked extention
