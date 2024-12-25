@@ -1,4 +1,4 @@
-# ImprovedYT
+# BetterYT
 
 ## How to use
 
