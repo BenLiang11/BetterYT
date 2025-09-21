@@ -1,6 +1,5 @@
 // content_script.js
 
-let timerID = null;
 let observer = null;
 
 const selectorsMap = {
@@ -12,36 +11,6 @@ const selectorsMap = {
 };
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "setTimer") {
-    const seconds = message.seconds;
-
-    const video = document.querySelector("video");
-
-    if (video) {
-      if (timerID) {
-        clearTimeout(timerID);
-      }
-
-      sendResponse({ status: "Started timer" });
-      timerID = setTimeout(() => {
-        video.pause();
-        console.log("Video paused");
-      }, seconds * 1000);
-    } else {
-      sendResponse({ status: "No video found" });
-    }
-  }
-
-  if (message.action === "stopTimer") {
-    if (timerID) {
-      clearTimeout(timerID);
-      timerID = null;
-      sendResponse({ status: "Timer stopped" });
-    } else {
-      sendResponse({ status: "No active timer" });
-    }
-  }
-
   const selector = selectorsMap[message.action];
   if (message.action === "hidePeopleAlsoWatched") {
     togglePeopleAlsoWatched(message.checked);

@@ -1,78 +1,8 @@
 body {
   background-color: #f7fafc;
-  padding: 0.5rem 1rem;
+  padding: 0 1rem 0.75rem;
   width: 12rem;
   margin: 0px;
   border: 1px solid #cbd5e0;
   font-size: 12px;
-}
-
-/* Timer Title */
-.title {
-  margin: 4px 0px;
-}
-
-.live-timer {
-  font-size: 12px;
-  margin-left: 10px;
-}
-
-/* Timer settings */
-.timer-input-group {
-  display: flex;
-  margin: 4px 0px;
-}
-
-.timer-input {
-  font-size: 12px;
-  width: 100%;
-  padding: 2px;
-  border: 1px solid #cbd5e0;
-  margin-right: 4px;
-}
-
-.timer-label {
-  font-size: 10px;
-  margin-right: 4px;
-}
-
-/* Timer Buttons */
-
-.timer-buttons {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.timer-button {
-  font-size: 12px;
-  width: 100%;
-  border: 1px solid #cbd5e0;
-  padding: 4px;
-  margin-bottom: 0.5rem;
-}
-
-.timer-button:active {
-  background-color: #d1d5db;
-  transform: scale(0.98);
-  transition: transform 0.2s;
-}
-
-/* Other options */
-
-.settings {
-  font-size: 12px;
-  margin: 0px 2px;
-}
-
-/* More */
-.more-toggle {
-  border: none;
-  cursor: pointer;
-  margin: 6px 4px;
-}
-
-.more-toggle span {
-  margin-left: 8px;
-  transition: transform 1s ease;
 }
