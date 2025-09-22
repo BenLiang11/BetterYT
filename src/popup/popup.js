@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "hideLatestPosts",
     "hidePlaylists",
     "hideLiveVids",
+    "hideExploreMore",
   ];
   checkboxes.forEach((id) => {
     chrome.storage.local.get(id, (data) => {
