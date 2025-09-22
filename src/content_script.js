@@ -9,6 +9,7 @@ const selectorsMap = {
   hidePlaylists: "ytd-playlist-renderer",
   hideLiveVids: "ytd-video-renderer",
   hideExploreMore: "ytd-shelf-renderer",
+  hidePreviouslyWatched: "ytd-shelf-renderer",
 };
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -21,6 +22,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse({ status: `Toggled ${message.action}` });
   } else if (message.action === "hideLatestPosts") {
     toggleLatestPosts(message.checked);
+    sendResponse({ status: `Toggled ${message.action}` });
+  } else if (message.action === "hidePreviouslyWatched") {
+    togglePreviouslyWatched(message.checked);
     sendResponse({ status: `Toggled ${message.action}` });
   } else if (message.action === "hideShorts") {
     toggleElements(selector, message.checked); // Hides ytd-reel-shelf-renderer
@@ -98,6 +102,17 @@ function toggleExploreMore(hide) {
   });
 }
 
+// Hide "Previously watched"
+function togglePreviouslyWatched(hide) {
+  const shelfRenderers = document.querySelectorAll("ytd-shelf-renderer");
+  shelfRenderers.forEach((shelf) => {
+    const titleElement = shelf.querySelector("span#title");
+    if (titleElement && titleElement.textContent.trim() === "Previously watched") {
+      shelf.style.display = hide ? "none" : "";
+    }
+  });
+}
+
 // Observe changes on the page
 function observeMutations() {
   const observer = new MutationObserver(() => {
@@ -111,6 +126,8 @@ function observeMutations() {
           toggleLatestPosts(shouldHide);
         } else if (key === "hideExploreMore") {
           toggleExploreMore(shouldHide);
+        } else if (key === "hidePreviouslyWatched") {
+          togglePreviouslyWatched(shouldHide);
         } else if (key === "hideShorts") {
           // Must check for both types of Shorts on mutation
           toggleElements(selectorsMap[key], shouldHide);
