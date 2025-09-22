@@ -18,6 +18,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   } else if (message.action === "hideLatestPosts") {
     toggleLatestPosts(message.checked);
     sendResponse({ status: `Toggled ${message.action}` });
+  } else if (message.action === "hideShorts") {
+    toggleElements(selector, message.checked); // Hides ytd-reel-shelf-renderer
+    toggleGridShorts(message.checked); // Hides grid style shorts
+    sendResponse({ status: `Toggled ${message.action}` });
   } else if (selector) {
     toggleElements(selector, message.checked);
     sendResponse({ status: `Toggled ${message.action}` });
@@ -38,6 +42,19 @@ function toggleElements(selector, hide) {
     // For other elements, hide or show directly
     else {
       element.style.display = hide ? "none" : "";
+    }
+  });
+}
+
+// Hide the grid-style "Shorts" section HERE
+function toggleGridShorts(hide) {
+  const gridSections = document.querySelectorAll(
+    ".ytGridShelfViewModelHost.ytd-item-section-renderer"
+  );
+  gridSections.forEach((section) => {
+    const titleElement = section.querySelector(".yt-core-attributed-string");
+    if (titleElement && titleElement.textContent.trim().includes("Shorts")) {
+      section.style.display = hide ? "none" : "";
     }
   });
 }
@@ -67,12 +84,20 @@ function toggleLatestPosts(hide) {
 // Observe changes on the page
 function observeMutations() {
   const observer = new MutationObserver(() => {
+    // Re-apply all hiding preferences when the page content changes
     Object.keys(selectorsMap).forEach((key) => {
       chrome.storage.local.get(key, (data) => {
+        const shouldHide = data[key];
         if (key === "hidePeopleAlsoWatched") {
-          togglePeopleAlsoWatched(data[key]);
+          togglePeopleAlsoWatched(shouldHide);
+        } else if (key === "hideLatestPosts") {
+          toggleLatestPosts(shouldHide);
+        } else if (key === "hideShorts") {
+          // Must check for both types of Shorts on mutation
+          toggleElements(selectorsMap[key], shouldHide);
+          toggleGridShorts(shouldHide);
         } else {
-          toggleElements(selectorsMap[key], data[key]);
+          toggleElements(selectorsMap[key], shouldHide);
         }
       });
     });
